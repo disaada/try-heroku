@@ -1,6 +1,12 @@
 const express = require('express')
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 const app = express()
 
-app.get('/', (req, res) => res.send('hello'))
+const model = require('./db/models')
+app.get('/', (req, res) => {
+  model.user.findAll()
+  .then((data) => res.send(data))
+  .catch((err) => res.send(err))
+})
+
 app.listen(port, () => console.log(`listening app to ${port}`))
